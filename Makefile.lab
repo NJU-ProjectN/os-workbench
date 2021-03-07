@@ -2,8 +2,8 @@
 
 export COURSE := OS2021
 URL := 'http://jyywiki.cn'
-'
-submit: clean-all
+
+submit:
 	@cd $(dir $(abspath $(lastword $(MAKEFILE_LIST)))) && \
 	  curl -sSL '$(URL)/static/submit.sh' | bash
 
@@ -12,9 +12,3 @@ git:
 	@while (test -e .git/index.lock); do sleep 0.1; done
 	@(hostnamectl && uptime) | git commit -F - -q --author='tracer-nju <tracer@nju.edu.cn>' --no-verify --allow-empty
 	@sync
-
-.PHONY: clean-all
-
-clean-all:
-	@-make -C ../abstract-machine clean > /dev/null
-	@-find .. -type d -name build | xargs rm -rf
